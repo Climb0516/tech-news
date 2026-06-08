@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & 技术动态</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d14;
+      --surface: #15151f;
+      --surface-hover: #1c1c2c;
+      --border: #22223a;
+      --border-hover: #38385a;
+      --text-1: #e2e2f0;
+      --text-2: #8080a8;
+      --text-3: #50506a;
+      --cat-a: #818cf8;
+      --cat-b: #22d3ee;
+      --cat-c: #34d399;
+      --cat-d: #fbbf24;
+      --cat-e: #f87171;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── Header ── */
+    header {
+      padding: 28px 0 22px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(99,102,241,0.07) 0%, transparent 100%);
+    }
+    .header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(120deg, #818cf8 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .site-sub {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+    .updated-badge {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+
+    /* ── Sticky filter bar ── */
+    .filter-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(13,13,20,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .filter-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-2);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .pill:hover { border-color: var(--border-hover); color: var(--text-1); }
+    .pill.active { background: #312e81; border-color: var(--cat-a); color: #c7d2fe; }
+
+    .count-label {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+
+    /* ── Grid ── */
+    .feed { padding: 24px 0 72px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+
+    /* ── Card ── */
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+    .card:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .badge-A { background: rgba(129,140,248,0.14); color: var(--cat-a); }
+    .badge-B { background: rgba(34,211,238,0.12); color: var(--cat-b); }
+    .badge-C { background: rgba(52,211,153,0.12); color: var(--cat-c); }
+    .badge-D { background: rgba(251,191,36,0.12); color: var(--cat-d); }
+    .badge-E { background: rgba(248,113,113,0.12); color: var(--cat-e); }
+
+    .card-source { font-size: 0.72rem; color: var(--text-3); flex-shrink: 0; }
+    .card-title {
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text-1);
+      line-height: 1.45;
+    }
+    .card-summary {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      line-height: 1.65;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2px;
+    }
+    .read-link {
+      font-size: 0.76rem;
+      color: var(--cat-a);
+      font-weight: 500;
+      opacity: 0.85;
+    }
+    .card:hover .read-link { opacity: 1; }
+    .card-date { font-size: 0.7rem; color: var(--text-3); }
+
+    /* ── Empty / error ── */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 0;
+      color: var(--text-3);
+      font-size: 0.9rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-3);
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .header-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-row">
+      <div>
+        <div class="site-title">🤖 AI & 技术动态</div>
+        <div class="site-sub">AI 与互联网技术最新资讯 · 由 Claude Code 自动整理</div>
+      </div>
+      <div class="updated-badge">更新于 <span id="js-updated">—</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-inner">
+      <div class="filter-pills" id="js-pills">
+        <button class="pill active" data-cat="ALL">全部</button>
+        <button class="pill" data-cat="A">大模型 / AI 研究</button>
+        <button class="pill" data-cat="B">AI 产品 / 工具</button>
+        <button class="pill" data-cat="C">开源社区</button>
+        <button class="pill" data-cat="D">开发技术</button>
+        <button class="pill" data-cat="E">行业动态</button>
+      </div>
+      <div class="count-label" id="js-count"></div>
+    </div>
+  </div>
+</div>
+
+<main class="feed">
+  <div class="container">
+    <div class="grid" id="js-grid">
+      <div class="empty">加载中…</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    Powered by <strong>Claude Code</strong> · <span id="js-footer-updated"></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const CAT = {
+    A: '大模型 / AI 研究',
+    B: 'AI 产品 / 工具',
+    C: '开源社区',
+    D: '开发技术',
+    E: '行业动态',
+  };
+
+  let allItems = [];
+  let activeCat = 'ALL';
+
+  function esc(s) {
+    return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function render() {
+    const items = activeCat === 'ALL' ? allItems : allItems.filter(i => i.category === activeCat);
+    const grid = document.getElementById('js-grid');
+    const count = document.getElementById('js-count');
+
+    count.textContent = items.length + ' 条';
+
+    if (!items.length) {
+      grid.innerHTML = '<div class="empty">暂无内容</div>';
+      return;
+    }
+
+    grid.innerHTML = items.map(item => {
+      const hasUrl = item.url && item.url !== '#';
+      const label = CAT[item.category] || item.category;
+      return `<a class="card" ${hasUrl ? `href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"` : ''}>
+  <div class="card-top">
+    <span class="badge badge-${esc(item.category)}">${esc(label)}</span>
+    <span class="card-source">${esc(item.source)}</span>
+  </div>
+  <div class="card-title">${esc(item.title)}</div>
+  <div class="card-summary">${esc(item.summary)}</div>
+  <div class="card-bottom">
+    <span class="read-link">${hasUrl ? '阅读原文 →' : ''}</span>
+    <span class="card-date">${esc(item.date || '')}</span>
+  </div>
+</a>`;
+    }).join('');
+  }
+
+  document.getElementById('js-pills').addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-cat]');
+    if (!btn) return;
+    activeCat = btn.dataset.cat;
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+
+  fetch('data.json?v=' + Date.now())
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      allItems = data.items || [];
+      const d = data.updated || '';
+      document.getElementById('js-updated').textContent = d;
+      document.getElementById('js-footer-updated').textContent = d ? '数据更新于 ' + d : '';
+      render();
+    })
+    .catch(function () {
+      document.getElementById('js-grid').innerHTML =
+        '<div class="empty">⚠️ 数据加载失败<br><small>请用本地服务器打开，或部署到 GitHub Pages 后访问</small></div>';
+    });
+}());
+</script>
+
+</body>
+</html>

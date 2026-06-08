@@ -1,0 +1,173 @@
+{
+  "updated": "2026-06-08",
+  "items": [
+    {
+      "category": "A",
+      "title": "GPT-5.5 Instant 成为 ChatGPT 默认模型",
+      "source": "OpenAI",
+      "summary": "主打最强 agentic 能力，专为企业知识工作和代码生成场景优化，已面向全量用户默认启用。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "A",
+      "title": "Gemini 3.5 Flash 正式 GA，速度是上代 4 倍",
+      "source": "Google I/O",
+      "summary": "与旗舰大模型性能相当，在代码和 agentic 基准上超越 Gemini 3.1 Pro，API 定价 $1.50/$9.00 / 百万 token。Gemini 3.5 Pro 预计 6 月内上线。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "A",
+      "title": "DeepSeek-V4 发布，1.6T 参数 MoE 旗舰",
+      "source": "DeepSeek",
+      "summary": "旗舰版 1.6T 参数（活跃 49B），专攻长上下文推理、代码和 agentic 工作流；Flash 版 284B（活跃 13B）主打效率。",
+      "url": "https://www.alphamatch.ai/blog/open-source-llm-comparison-blog-2026",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "A",
+      "title": "Kimi K2.6 发布，引入 Agent Swarm 架构",
+      "source": "Moonshot AI",
+      "summary": "1 万亿参数 MoE，32B active，384 个专家，独特的 Agent Swarm 架构主打多 agent 协同工作流。",
+      "url": "https://www.alphamatch.ai/blog/open-source-llm-comparison-blog-2026",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "A",
+      "title": "Sony AI Project Ace：机器人首次击败专业乒乓球选手",
+      "source": "Sony AI",
+      "summary": "在真实世界乒乓球比赛中击败专业人类选手，是机器人首次在常见竞技运动中达到专家级别，具身智能重要里程碑。",
+      "url": "https://ai.sony/news/sony-ai-announces-breakthrough-research-in-real-world-artificial-intelligence-and-robotics",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "B",
+      "title": "Claude Code 达 $25 亿 ARR，Anthropic 整体年化 $300 亿",
+      "source": "Anthropic",
+      "summary": "公开发布仅 9 个月，Q1 同比增长 80 倍。Anthropic 已秘密向 SEC 提交 S-1 草案，IPO 准备信号明确。",
+      "url": "https://www.anthropic.com/news",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "B",
+      "title": "GitHub Copilot 切换计量计费，引入 AI Credits",
+      "source": "Microsoft / GitHub",
+      "summary": "6 月 1 日起从请求次数计费改为用量计费，虚拟货币 GitHub AI Credits，$0.01 / 积分。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "B",
+      "title": "Microsoft 和 Google 正面挑战 Anthropic、OpenAI 编码市场",
+      "source": "CNBC",
+      "summary": "微软、Google 相继推出更强 AI 编码模型，AI 编程工具市场竞争全面升级。",
+      "url": "https://www.cnbc.com/2026/06/01/microsoft-and-google-take-on-anthropic-and-openai-in-ai-coding-models.html",
+      "date": "2026-06-01"
+    },
+    {
+      "category": "B",
+      "title": "Anthropic 扩展 Project Glasswing 企业协作项目",
+      "source": "Anthropic",
+      "summary": "6 月 2 日宣布扩展，定位为企业级 AI 协作项目，具体功能细节待披露。",
+      "url": "https://www.anthropic.com/news",
+      "date": "2026-06-02"
+    },
+    {
+      "category": "C",
+      "title": "OpenClaw 爆红突破 21 万 GitHub 星",
+      "source": "GitHub",
+      "summary": "本地运行的个人 AI 助手，连接 WhatsApp、Telegram、Slack、iMessage 等 50+ 服务，数天内从 9k 飙升至 21 万星，2026 年增长最快开源项目。",
+      "url": "https://github.com/trending",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "C",
+      "title": "Ollama 突破 16.5 万星：本地 LLM 的 Docker",
+      "source": "GitHub",
+      "summary": "一条命令即可运行 Llama、DeepSeek、Mistral 等模型，持续被称为「LLM 界的 Docker」。",
+      "url": "https://github.com/trending",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "C",
+      "title": "ComfyUI 突破 10.6 万星，节点式 AI 图像工作流",
+      "source": "GitHub",
+      "summary": "可视化控制图像生成管线的每个步骤，2026 年持续高速增长。",
+      "url": "https://ossinsight.io/trending/ai",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "C",
+      "title": "AI Agent Skills 框架爆发，前 20 热门仓库中 5 个含 skills",
+      "source": "GitHub Trending",
+      "summary": "Agent 技能生态系统正在快速成形，基础设施向生产级 Agent 方向集中转移。",
+      "url": "https://ossinsight.io/trending/ai",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "D",
+      "title": "Vue 3.5 Vapor Mode 稳定版：DOM 操作性能提升 36%",
+      "source": "Vue.js",
+      "summary": "完全绕过 Virtual DOM，每周 NPM 下载量 640 万次，同比增长 37%，开发者满意度 93%。",
+      "url": "https://till-freitag.com/en/blog/open-source-llm-comparison",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "D",
+      "title": "iOS 26.2 起开放第三方支付和替代应用市场",
+      "source": "Apple Developer",
+      "summary": "日本 MSCA 合规要求推动，EU DMA 要求 6 月 1 日前开放通知、近场配对等互操作接口；Apple/Google 合作推出跨平台无线数据迁移方案。",
+      "url": "https://developer.apple.com/news/",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "D",
+      "title": "HTTP/2 Bomb 漏洞披露：影响 NGINX、Apache、IIS、Envoy、Cloudflare",
+      "source": "The Hacker News",
+      "summary": "可被远程利用触发 DoS 攻击，建议立即检查并修复受影响服务器。",
+      "url": "https://thehackernews.com/2026/06/new-http2-bomb-vulnerability-allows.html",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "D",
+      "title": "Next.js 仍是 2026 年全栈框架首选，服务器优先成默认范式",
+      "source": "State of JS / Wasp",
+      "summary": "开发者调查和招聘岗位双料第一，服务器优先渲染成为 2026 年 Web 开发默认方式。",
+      "url": "https://wasp.sh/resources/2026/02/24/best-frameworks-web-dev-2026",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "E",
+      "title": "Impulse Space 完成 $5 亿 D 轮融资",
+      "source": "Tech Startups",
+      "summary": "专注近地轨道以上太空基础设施和在轨机动业务，估值显著提升。",
+      "url": "https://techstartups.com/2026/06/02/venture-capital-startup-funding-roundup-june-2-2026/",
+      "date": "2026-06-02"
+    },
+    {
+      "category": "E",
+      "title": "AI 融资进入理性期：薄壳套壳产品难再获投",
+      "source": "行业观察",
+      "summary": "投资者明显转向，需要真实牵引力、差异化护城河。AI、fintech 和深科技领跑融资活动。",
+      "url": "https://blog.mean.ceo/startup-funding-trends-june-2026/",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "E",
+      "title": "Miasma 供应链攻击袭击微软 73 个 GitHub 仓库",
+      "source": "The Hacker News",
+      "summary": "自我复制攻击波及 Azure、Azure-Samples、Microsoft、MicrosoftDocs 等组织，2026 年供应链安全警报持续升级。",
+      "url": "https://thehackernews.com/",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "E",
+      "title": "AI 辅助攻击成 2026 年最大网络威胁",
+      "source": "The Hacker News",
+      "summary": "AI agent 已被用于自动发现零日漏洞（FFmpeg 被发现 21 个），安全工程师需求激增，AI 安全成主流议题。",
+      "url": "https://thehackernews.com/2026/05/2026-year-of-ai-assisted-attacks.html",
+      "date": "2026-06-08"
+    }
+  ]
+}
