@@ -21,6 +21,8 @@
       --cat-c: #34d399;
       --cat-d: #fbbf24;
       --cat-e: #f87171;
+      --tl-line: #22223a;
+      --tl-dot: #38385a;
     }
 
     body {
@@ -75,17 +77,23 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(13,13,20,0.88);
+      background: rgba(13,13,20,0.9);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      padding: 12px 0;
+      padding: 10px 0;
     }
     .filter-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .filter-pills {
@@ -94,7 +102,7 @@
       flex-wrap: wrap;
     }
     .pill {
-      padding: 5px 13px;
+      padding: 4px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: transparent;
@@ -107,18 +115,99 @@
     .pill:hover { border-color: var(--border-hover); color: var(--text-1); }
     .pill.active { background: #312e81; border-color: var(--cat-a); color: #c7d2fe; }
 
+    /* ── View toggle ── */
+    .view-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+    .view-btn {
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--text-3);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .view-btn:hover { color: var(--text-2); }
+    .view-btn.active { background: var(--border-hover); color: var(--text-1); }
+
+    .filter-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
     .count-label {
       font-size: 0.75rem;
       color: var(--text-3);
       white-space: nowrap;
     }
 
-    /* ── Grid ── */
+    /* ── Feed area ── */
     .feed { padding: 24px 0 72px; }
+
+    /* ── Grid view ── */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 14px;
+    }
+
+    /* ── Timeline view ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .tl-group { display: flex; gap: 0; position: relative; }
+
+    .tl-spine {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60px;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--cat-a);
+      box-shadow: 0 0 0 3px rgba(129,140,248,0.2);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .tl-line {
+      width: 2px;
+      flex: 1;
+      background: var(--tl-line);
+      margin-top: 6px;
+      min-height: 20px;
+    }
+    .tl-group:last-child .tl-line { display: none; }
+
+    .tl-body { flex: 1; padding-bottom: 32px; }
+
+    .tl-date-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      padding-top: 2px;
+    }
+
+    .tl-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
     }
 
     /* ── Card ── */
@@ -129,7 +218,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 18px;
+      padding: 16px;
       text-decoration: none;
       color: inherit;
       transition: background 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
@@ -141,7 +230,6 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(0,0,0,0.35);
     }
-
     .card-top {
       display: flex;
       align-items: center;
@@ -149,9 +237,9 @@
       gap: 8px;
     }
     .badge {
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       font-weight: 600;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
       letter-spacing: 0.02em;
       white-space: nowrap;
@@ -162,15 +250,10 @@
     .badge-D { background: rgba(251,191,36,0.12); color: var(--cat-d); }
     .badge-E { background: rgba(248,113,113,0.12); color: var(--cat-e); }
 
-    .card-source { font-size: 0.72rem; color: var(--text-3); flex-shrink: 0; }
-    .card-title {
-      font-size: 0.94rem;
-      font-weight: 600;
-      color: var(--text-1);
-      line-height: 1.45;
-    }
+    .card-source { font-size: 0.7rem; color: var(--text-3); flex-shrink: 0; }
+    .card-title { font-size: 0.92rem; font-weight: 600; color: var(--text-1); line-height: 1.45; }
     .card-summary {
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       color: var(--text-2);
       line-height: 1.65;
       flex: 1;
@@ -185,16 +268,11 @@
       justify-content: space-between;
       margin-top: 2px;
     }
-    .read-link {
-      font-size: 0.76rem;
-      color: var(--cat-a);
-      font-weight: 500;
-      opacity: 0.85;
-    }
+    .read-link { font-size: 0.75rem; color: var(--cat-a); font-weight: 500; opacity: 0.85; }
     .card:hover .read-link { opacity: 1; }
     .card-date { font-size: 0.7rem; color: var(--text-3); }
 
-    /* ── Empty / error ── */
+    /* ── Empty ── */
     .empty {
       grid-column: 1 / -1;
       text-align: center;
@@ -212,9 +290,11 @@
       border-top: 1px solid var(--border);
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .grid { grid-template-columns: 1fr; }
+      .tl-cards { grid-template-columns: 1fr; }
       .header-row { flex-direction: column; }
+      .tl-spine { width: 36px; }
     }
   </style>
 </head>
@@ -235,23 +315,37 @@
 <div class="filter-bar">
   <div class="container">
     <div class="filter-inner">
-      <div class="filter-pills" id="js-pills">
-        <button class="pill active" data-cat="ALL">全部</button>
-        <button class="pill" data-cat="A">大模型 / AI 研究</button>
-        <button class="pill" data-cat="B">AI 产品 / 工具</button>
-        <button class="pill" data-cat="C">开源社区</button>
-        <button class="pill" data-cat="D">开发技术</button>
-        <button class="pill" data-cat="E">行业动态</button>
+      <div class="filter-left">
+        <div class="filter-pills" id="js-pills">
+          <button class="pill active" data-cat="ALL">全部</button>
+          <button class="pill" data-cat="A">大模型 / AI 研究</button>
+          <button class="pill" data-cat="B">AI 产品 / 工具</button>
+          <button class="pill" data-cat="C">开源社区</button>
+          <button class="pill" data-cat="D">开发技术</button>
+          <button class="pill" data-cat="E">行业动态</button>
+        </div>
       </div>
-      <div class="count-label" id="js-count"></div>
+      <div class="filter-right">
+        <div class="view-toggle" id="js-view-toggle">
+          <button class="view-btn active" data-view="timeline">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="2" cy="2.5" r="1.5" fill="currentColor"/><rect x="5" y="1.5" width="8" height="2" rx="1" fill="currentColor" opacity=".5"/><circle cx="2" cy="6.5" r="1.5" fill="currentColor"/><rect x="5" y="5.5" width="8" height="2" rx="1" fill="currentColor" opacity=".5"/><circle cx="2" cy="10.5" r="1.5" fill="currentColor"/><rect x="5" y="9.5" width="8" height="2" rx="1" fill="currentColor" opacity=".5"/></svg>
+            时间轴
+          </button>
+          <button class="view-btn" data-view="grid">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="0" y="0" width="5.5" height="5.5" rx="1.5" fill="currentColor" opacity=".5"/><rect x="7.5" y="0" width="5.5" height="5.5" rx="1.5" fill="currentColor" opacity=".5"/><rect x="0" y="7.5" width="5.5" height="5.5" rx="1.5" fill="currentColor" opacity=".5"/><rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1.5" fill="currentColor" opacity=".5"/></svg>
+            卡片
+          </button>
+        </div>
+        <div class="count-label" id="js-count"></div>
+      </div>
     </div>
   </div>
 </div>
 
 <main class="feed">
   <div class="container">
-    <div class="grid" id="js-grid">
-      <div class="empty">加载中…</div>
+    <div id="js-content">
+      <div class="grid"><div class="empty">加载中…</div></div>
     </div>
   </div>
 </main>
@@ -274,27 +368,16 @@
 
   let allItems = [];
   let activeCat = 'ALL';
+  let activeView = 'timeline';
 
   function esc(s) {
-    return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function render() {
-    const items = activeCat === 'ALL' ? allItems : allItems.filter(i => i.category === activeCat);
-    const grid = document.getElementById('js-grid');
-    const count = document.getElementById('js-count');
-
-    count.textContent = items.length + ' 条';
-
-    if (!items.length) {
-      grid.innerHTML = '<div class="empty">暂无内容</div>';
-      return;
-    }
-
-    grid.innerHTML = items.map(item => {
-      const hasUrl = item.url && item.url !== '#';
-      const label = CAT[item.category] || item.category;
-      return `<a class="card" ${hasUrl ? `href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"` : ''}>
+  function cardHTML(item) {
+    const hasUrl = item.url && item.url !== '#';
+    const label = CAT[item.category] || item.category;
+    return `<a class="card" ${hasUrl ? `href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"` : ''}>
   <div class="card-top">
     <span class="badge badge-${esc(item.category)}">${esc(label)}</span>
     <span class="card-source">${esc(item.source)}</span>
@@ -306,14 +389,64 @@
     <span class="card-date">${esc(item.date || '')}</span>
   </div>
 </a>`;
-    }).join('');
   }
 
+  function renderGrid(items) {
+    if (!items.length) return '<div class="grid"><div class="empty">暂无内容</div></div>';
+    return `<div class="grid">${items.map(cardHTML).join('')}</div>`;
+  }
+
+  function renderTimeline(items) {
+    if (!items.length) return '<div class="timeline"><div class="empty">暂无内容</div></div>';
+
+    // group by date
+    const groups = {};
+    items.forEach(item => {
+      const d = item.date || '未知日期';
+      if (!groups[d]) groups[d] = [];
+      groups[d].push(item);
+    });
+
+    const dates = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+    return `<div class="timeline">${dates.map(date => `
+  <div class="tl-group">
+    <div class="tl-spine">
+      <div class="tl-dot"></div>
+      <div class="tl-line"></div>
+    </div>
+    <div class="tl-body">
+      <div class="tl-date-label">${esc(date)}</div>
+      <div class="tl-cards">${groups[date].map(cardHTML).join('')}</div>
+    </div>
+  </div>`).join('')}</div>`;
+  }
+
+  function render() {
+    const items = activeCat === 'ALL' ? allItems : allItems.filter(i => i.category === activeCat);
+    const content = document.getElementById('js-content');
+    const count = document.getElementById('js-count');
+
+    count.textContent = items.length + ' 条';
+    content.innerHTML = activeView === 'timeline' ? renderTimeline(items) : renderGrid(items);
+  }
+
+  // category filter
   document.getElementById('js-pills').addEventListener('click', function (e) {
     const btn = e.target.closest('[data-cat]');
     if (!btn) return;
     activeCat = btn.dataset.cat;
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+
+  // view toggle
+  document.getElementById('js-view-toggle').addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-view]');
+    if (!btn) return;
+    activeView = btn.dataset.view;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     render();
   });
@@ -328,8 +461,8 @@
       render();
     })
     .catch(function () {
-      document.getElementById('js-grid').innerHTML =
-        '<div class="empty">⚠️ 数据加载失败<br><small>请用本地服务器打开，或部署到 GitHub Pages 后访问</small></div>';
+      document.getElementById('js-content').innerHTML =
+        '<div class="grid"><div class="empty">⚠️ 数据加载失败<br><small>请用本地服务器打开，或部署到 GitHub Pages 后访问</small></div></div>';
     });
 }());
 </script>
