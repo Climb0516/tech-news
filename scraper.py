@@ -63,19 +63,13 @@ def fetch_hn(limit=15):
     print("→ Hacker News")
     items = []
     try:
-        ids = fetch_json("https://hacker-news.firebaseio.com/v1/topstories.json")
-        for id in ids:
-            if len(items) >= limit:
-                break
-            try:
-                it = fetch_json(f"https://hacker-news.firebaseio.com/v1/item/{id}.json", timeout=5)
-                if it.get("type") == "story" and it.get("title") and it.get("url"):
-                    items.append(make_item(
-                        categorize(it["title"]), it["title"],
-                        "Hacker News", it["title"], it["url"]
-                    ))
-            except:
-                pass
+        # Algolia HN API — 公开无认证，Actions 环境稳定
+        data = fetch_json(f"https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage={limit}")
+        for hit in data.get("hits", []):
+            title = hit.get("title", "")
+            url   = hit.get("url") or f"https://news.ycombinator.com/item?id={hit.get('objectID','')}"
+            if title:
+                items.append(make_item(categorize(title), title, "Hacker News", title, url))
     except Exception as e:
         print(f"  error: {e}")
     print(f"  {len(items)} items")
@@ -103,7 +97,14 @@ def fetch_github_trending(limit=10):
     items = []
     try:
         html  = fetch_url("https://github.com/trending?since=daily").decode("utf-8", errors="ignore")
-        slugs = re.findall(r'<h2[^>]*>\s*<a\s+href="/([a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+)"', html)
+        # 宽泛匹配：h2 内任意位置的 /owner/repo 链接
+        slugs_raw = re.findall(r'<h2\b[^>]*>.*?href="/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)"', html, re.DOTALL)
+        # 去重并过滤非仓库路径
+        seen, slugs = set(), []
+        for s in slugs_raw:
+            if s not in seen:
+                seen.add(s)
+                slugs.append(s)
         descs = re.findall(r'class="[^"]*col-9[^"]*"[^>]*>\s*(.*?)\s*</p>', html, re.DOTALL)
         for i, slug in enumerate(slugs[:limit]):
             desc = clean_html(descs[i]) if i < len(descs) else ""
@@ -125,7 +126,7 @@ def fetch_arxiv(limit=8):
     try:
         root    = ET.fromstring(fetch_url("https://rss.arxiv.org/rss/cs.AI"))
         channel = root.find("channel")
-        for entry in (channel.findall("item") if channel else [])[:limit]:
+        for entry in (channel.findall("item") if channel is not None else [])[:limit]:
             title = (entry.findtext("title") or "").strip()
             link_el = entry.find("link")
             link = ""
@@ -148,7 +149,7 @@ def fetch_rss(feed_url, source_name, limit=8):
     try:
         root    = ET.fromstring(fetch_url(feed_url))
         channel = root.find("channel")
-        for entry in (channel.findall("item") if channel else [])[:limit]:
+        for entry in (channel.findall("item") if channel is not None else [])[:limit]:
             title = (entry.findtext("title") or "").strip()
             link_el = entry.find("link")
             link = ""
@@ -178,7 +179,7 @@ def insert(items):
         return
     body = json.dumps(items).encode()
     req  = urllib.request.Request(
-        f"{SUPABASE_URL}/rest/v1/news_items",
+        f"{SUPABASE_URL}/rest/v1/news_items?on_conflict=title",
         data=body,
         headers={
             "apikey":        ANON_KEY,
