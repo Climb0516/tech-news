@@ -210,6 +210,53 @@
       gap: 10px;
     }
 
+    /* ── Timeline rows ── */
+    .tl-rows { display: flex; flex-direction: column; }
+    .tl-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tl-row:last-child { border-bottom: none; }
+    .tl-cat-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .tl-dot-A { background: var(--cat-a); }
+    .tl-dot-B { background: var(--cat-b); }
+    .tl-dot-C { background: var(--cat-c); }
+    .tl-dot-D { background: var(--cat-d); }
+    .tl-dot-E { background: var(--cat-e); }
+    .tl-row-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+    .tl-row-title {
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: var(--text-1);
+      text-decoration: none;
+      line-height: 1.45;
+      transition: color 0.12s;
+    }
+    a.tl-row-title:hover { color: var(--cat-a); }
+    .tl-row-summary {
+      font-size: 0.77rem;
+      color: var(--text-3);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tl-row-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+    .tl-row-source { font-size: 0.68rem; color: var(--text-3); }
+
     /* ── Card ── */
     .card {
       display: flex;
@@ -506,6 +553,26 @@
 </a>`;
   }
 
+  function timelineRowHTML(item) {
+    const hasUrl = item.url && item.url !== '#';
+    const label  = CAT[item.category] || item.category;
+    const cat    = item.category || 'A';
+    const title  = hasUrl
+      ? `<a class="tl-row-title" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)}</a>`
+      : `<span class="tl-row-title">${esc(item.title)}</span>`;
+    return `<div class="tl-row">
+  <span class="tl-cat-dot tl-dot-${esc(cat)}"></span>
+  <div class="tl-row-body">
+    ${title}
+    ${item.summary ? `<div class="tl-row-summary">${esc(item.summary)}</div>` : ''}
+    <div class="tl-row-meta">
+      <span class="badge badge-${esc(cat)}">${esc(label)}</span>
+      <span class="tl-row-source">${esc(item.source)}</span>
+    </div>
+  </div>
+</div>`;
+  }
+
   function renderGrid(items) {
     if (!items.length) return '<div class="grid"><div class="empty">暂无内容</div></div>';
     return `<div class="grid">${items.map(cardHTML).join('')}</div>`;
@@ -514,7 +581,6 @@
   function renderTimeline(items) {
     if (!items.length) return '<div class="timeline"><div class="empty">暂无内容</div></div>';
 
-    // group by date
     const groups = {};
     items.forEach(item => {
       const d = item.date || '未知日期';
@@ -532,7 +598,7 @@
     </div>
     <div class="tl-body">
       <div class="tl-date-label">${esc(date)}</div>
-      <div class="tl-cards">${groups[date].map(cardHTML).join('')}</div>
+      <div class="tl-rows">${groups[date].map(timelineRowHTML).join('')}</div>
     </div>
   </div>`).join('')}</div>`;
   }
