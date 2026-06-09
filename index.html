@@ -451,18 +451,23 @@
     render();
   });
 
-  fetch('data.json?v=' + Date.now())
+  var SUPABASE_URL = 'https://sqrzrvstlvxqxdxvhlxz.supabase.co';
+  var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxcnpydnN0bHZ4cXhkeHZobHh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTUzMjAsImV4cCI6MjA5NjU5MTMyMH0.C6Gz61TB3GhLnbDWywogGZDcqTu1G2ta9-Dyo60Yiho';
+
+  fetch(SUPABASE_URL + '/rest/v1/news_items?select=*&order=date.desc,created_at.desc&limit=200', {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  })
     .then(function (r) { return r.json(); })
-    .then(function (data) {
-      allItems = data.items || [];
-      const d = data.updated || '';
+    .then(function (rows) {
+      allItems = Array.isArray(rows) ? rows : [];
+      var d = allItems.length ? allItems[0].date : '';
       document.getElementById('js-updated').textContent = d;
       document.getElementById('js-footer-updated').textContent = d ? '数据更新于 ' + d : '';
       render();
     })
     .catch(function () {
       document.getElementById('js-content').innerHTML =
-        '<div class="grid"><div class="empty">⚠️ 数据加载失败<br><small>请用本地服务器打开，或部署到 GitHub Pages 后访问</small></div></div>';
+        '<div class="grid"><div class="empty">⚠️ 数据加载失败<br><small>请检查网络或 Supabase 配置</small></div></div>';
     });
 }());
 </script>
