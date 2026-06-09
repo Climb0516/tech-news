@@ -290,52 +290,70 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ── HN Real-time strip ── */
-    .hn-strip {
-      background: linear-gradient(90deg, rgba(255,102,0,0.06) 0%, transparent 60%);
+    /* ── HN 热榜 ── */
+    .hn-hot {
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 7px 0;
+      padding: 14px 0;
     }
-    .hn-ticker {
+    .hn-hot-head {
       display: flex;
       align-items: center;
-      overflow-x: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      gap: 0;
+      justify-content: space-between;
+      margin-bottom: 10px;
     }
-    .hn-ticker::-webkit-scrollbar { display: none; }
-    .hn-label {
-      font-size: 0.68rem;
+    .hn-hot-title {
+      font-size: 0.8rem;
       font-weight: 700;
       color: #ff6600;
-      white-space: nowrap;
-      flex-shrink: 0;
-      padding-right: 12px;
-      border-right: 1px solid var(--border);
-      margin-right: 10px;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
     }
-    .hn-items {
+    .hn-hot-sub {
+      font-size: 0.68rem;
+      color: var(--text-3);
+    }
+    .hn-hot-list {
+      columns: 2;
+      column-gap: 32px;
+    }
+    .hn-item {
+      break-inside: avoid;
       display: flex;
       align-items: center;
-      flex: 1;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .hn-items::-webkit-scrollbar { display: none; }
-    .hn-link {
-      font-size: 0.75rem;
-      color: var(--text-2);
-      white-space: nowrap;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(34,34,58,0.7);
       text-decoration: none;
-      padding: 2px 8px;
-      border-radius: 4px;
-      transition: color 0.15s, background 0.15s;
-      flex-shrink: 0;
+      min-width: 0;
     }
-    .hn-link:hover { color: var(--text-1); background: var(--surface); }
-    .hn-sep { color: var(--border-hover); font-size: 0.65rem; flex-shrink: 0; }
+    .hn-rank {
+      font-size: 0.72rem;
+      font-weight: 700;
+      min-width: 18px;
+      text-align: center;
+      flex-shrink: 0;
+      color: var(--text-3);
+    }
+    .hn-rank-1 { color: #ef4444; }
+    .hn-rank-2 { color: #f97316; }
+    .hn-rank-3 { color: #eab308; }
+    .hn-item-title {
+      font-size: 0.79rem;
+      color: var(--text-2);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.12s;
+    }
+    .hn-item:hover .hn-item-title { color: var(--text-1); }
+    .hn-item-pts {
+      font-size: 0.66rem;
+      color: var(--text-3);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
 
     /* ── Card image / placeholder ── */
     .card { overflow: hidden; }
@@ -370,6 +388,7 @@
       .tl-cards { grid-template-columns: 1fr; }
       .header-row { flex-direction: column; }
       .tl-spine { width: 36px; }
+      .hn-hot-list { columns: 1; }
     }
   </style>
 </head>
@@ -387,14 +406,13 @@
   </div>
 </header>
 
-<div class="hn-strip" id="js-hn-strip">
+<div class="hn-hot" id="js-hn-strip">
   <div class="container">
-    <div class="hn-ticker">
-      <span class="hn-label">⚡ HN 热榜</span>
-      <div class="hn-items" id="js-hn-items">
-        <span style="color:var(--text-3);font-size:0.74rem;padding-left:4px;">加载中…</span>
-      </div>
+    <div class="hn-hot-head">
+      <span class="hn-hot-title">🔥 HN 实时热榜</span>
+      <span class="hn-hot-sub" id="js-hn-sub">加载中…</span>
     </div>
+    <div class="hn-hot-list" id="js-hn-items"></div>
   </div>
 </div>
 
@@ -548,22 +566,29 @@
     render();
   });
 
-  // ── HN Real-time strip ──────────────────────────────────────────────────────
+  // ── HN 热榜 ────────────────────────────────────────────────────────────────
   (function loadHNStrip() {
-    var strip     = document.getElementById('js-hn-strip');
-    var container = document.getElementById('js-hn-items');
-    if (!strip || !container) return;
-    // Algolia HN API — 单次请求，无 CORS 问题
-    fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=12')
+    var strip = document.getElementById('js-hn-strip');
+    var list  = document.getElementById('js-hn-items');
+    var sub   = document.getElementById('js-hn-sub');
+    if (!strip || !list) return;
+    fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=10')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var hits = (data.hits || []).filter(function(h) { return h.title; });
-        var html = hits.map(function(h, idx) {
-          var url = h.url || ('https://news.ycombinator.com/item?id=' + h.objectID);
-          return (idx > 0 ? '<span class="hn-sep">·</span>' : '') +
-            '<a class="hn-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(h.title) + '</a>';
+        var hits = (data.hits || []).filter(function(h) { return h.title; }).slice(0, 10);
+        if (!hits.length) { strip.style.display = 'none'; return; }
+        list.innerHTML = hits.map(function(h, idx) {
+          var rank = idx + 1;
+          var url  = h.url || ('https://news.ycombinator.com/item?id=' + h.objectID);
+          var pts  = h.points ? (h.points >= 1000 ? (h.points / 1000).toFixed(1) + 'k' : h.points + '') : '';
+          var rankCls = rank <= 3 ? ' hn-rank-' + rank : '';
+          return '<a class="hn-item" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+            '<span class="hn-rank' + rankCls + '">' + rank + '</span>' +
+            '<span class="hn-item-title">' + esc(h.title) + '</span>' +
+            (pts ? '<span class="hn-item-pts">▲ ' + pts + '</span>' : '') +
+            '</a>';
         }).join('');
-        container.innerHTML = html || '<span style="color:var(--text-3);font-size:0.74rem;">暂无数据</span>';
+        if (sub) sub.textContent = '实时更新';
       })
       .catch(function() { strip.style.display = 'none'; });
   }());
