@@ -290,6 +290,75 @@
       border-top: 1px solid var(--border);
     }
 
+    /* ── HN Real-time strip ── */
+    .hn-strip {
+      background: linear-gradient(90deg, rgba(255,102,0,0.06) 0%, transparent 60%);
+      border-bottom: 1px solid var(--border);
+      padding: 7px 0;
+    }
+    .hn-ticker {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      gap: 0;
+    }
+    .hn-ticker::-webkit-scrollbar { display: none; }
+    .hn-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #ff6600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding-right: 12px;
+      border-right: 1px solid var(--border);
+      margin-right: 10px;
+      letter-spacing: 0.04em;
+    }
+    .hn-items {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .hn-items::-webkit-scrollbar { display: none; }
+    .hn-link {
+      font-size: 0.75rem;
+      color: var(--text-2);
+      white-space: nowrap;
+      text-decoration: none;
+      padding: 2px 8px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+      flex-shrink: 0;
+    }
+    .hn-link:hover { color: var(--text-1); background: var(--surface); }
+    .hn-sep { color: var(--border-hover); font-size: 0.65rem; flex-shrink: 0; }
+
+    /* ── Card image ── */
+    .card { overflow: hidden; }
+    .card-img {
+      display: block;
+      width: calc(100% + 32px);
+      height: 148px;
+      object-fit: cover;
+      margin: -16px -16px 12px;
+    }
+
+    /* ── Type badge ── */
+    .type-badge {
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .type-ai      { background: rgba(129,140,248,0.1);  color: #a5b4fc; }
+    .type-scraped { background: rgba(52,211,153,0.1);   color: #6ee7b7; }
+
     @media (max-width: 640px) {
       .grid { grid-template-columns: 1fr; }
       .tl-cards { grid-template-columns: 1fr; }
@@ -311,6 +380,17 @@
     </div>
   </div>
 </header>
+
+<div class="hn-strip" id="js-hn-strip">
+  <div class="container">
+    <div class="hn-ticker">
+      <span class="hn-label">⚡ HN 热榜</span>
+      <div class="hn-items" id="js-hn-items">
+        <span style="color:var(--text-3);font-size:0.74rem;padding-left:4px;">加载中…</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="filter-bar">
   <div class="container">
@@ -375,11 +455,21 @@
   }
 
   function cardHTML(item) {
-    const hasUrl = item.url && item.url !== '#';
-    const label = CAT[item.category] || item.category;
+    const hasUrl   = item.url && item.url !== '#';
+    const label    = CAT[item.category] || item.category;
+    const isAI     = !item.type || item.type === 'ai';
+    const typeLabel = isAI ? 'AI精选' : '实时';
+    const typeCls   = isAI ? 'type-ai' : 'type-scraped';
+    const imgHTML   = item.image_url
+      ? `<img class="card-img" src="${esc(item.image_url)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+      : '';
     return `<a class="card" ${hasUrl ? `href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"` : ''}>
+  ${imgHTML}
   <div class="card-top">
-    <span class="badge badge-${esc(item.category)}">${esc(label)}</span>
+    <div style="display:flex;gap:5px;align-items:center;flex-wrap:wrap;">
+      <span class="badge badge-${esc(item.category)}">${esc(label)}</span>
+      <span class="type-badge ${typeCls}">${typeLabel}</span>
+    </div>
     <span class="card-source">${esc(item.source)}</span>
   </div>
   <div class="card-title">${esc(item.title)}</div>
@@ -450,6 +540,30 @@
     btn.classList.add('active');
     render();
   });
+
+  // ── HN Real-time strip ──────────────────────────────────────────────────────
+  (function loadHNStrip() {
+    var strip = document.getElementById('js-hn-strip');
+    var container = document.getElementById('js-hn-items');
+    if (!strip || !container) return;
+    fetch('https://hacker-news.firebaseio.com/v1/topstories.json')
+      .then(function(r) { return r.json(); })
+      .then(function(ids) {
+        return Promise.all(ids.slice(0, 10).map(function(id) {
+          return fetch('https://hacker-news.firebaseio.com/v1/item/' + id + '.json')
+            .then(function(r) { return r.json(); });
+        }));
+      })
+      .then(function(items) {
+        var html = items.filter(function(i) { return i && i.title; }).map(function(item, idx) {
+          var url = item.url || ('https://news.ycombinator.com/item?id=' + item.id);
+          return (idx > 0 ? '<span class="hn-sep">·</span>' : '') +
+            '<a class="hn-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(item.title) + '</a>';
+        }).join('');
+        container.innerHTML = html || '<span style="color:var(--text-3);font-size:0.74rem;">暂无数据</span>';
+      })
+      .catch(function() { strip.style.display = 'none'; });
+  }());
 
   var SUPABASE_URL = 'https://sqrzrvstlvxqxdxvhlxz.supabase.co';
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNxcnpydnN0bHZ4cXhkeHZobHh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTUzMjAsImV4cCI6MjA5NjU5MTMyMH0.C6Gz61TB3GhLnbDWywogGZDcqTu1G2ta9-Dyo60Yiho';
