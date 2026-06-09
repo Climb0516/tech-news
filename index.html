@@ -543,22 +543,18 @@
 
   // ── HN Real-time strip ──────────────────────────────────────────────────────
   (function loadHNStrip() {
-    var strip = document.getElementById('js-hn-strip');
+    var strip     = document.getElementById('js-hn-strip');
     var container = document.getElementById('js-hn-items');
     if (!strip || !container) return;
-    fetch('https://hacker-news.firebaseio.com/v1/topstories.json')
+    // Algolia HN API — 单次请求，无 CORS 问题
+    fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=12')
       .then(function(r) { return r.json(); })
-      .then(function(ids) {
-        return Promise.all(ids.slice(0, 10).map(function(id) {
-          return fetch('https://hacker-news.firebaseio.com/v1/item/' + id + '.json')
-            .then(function(r) { return r.json(); });
-        }));
-      })
-      .then(function(items) {
-        var html = items.filter(function(i) { return i && i.title; }).map(function(item, idx) {
-          var url = item.url || ('https://news.ycombinator.com/item?id=' + item.id);
+      .then(function(data) {
+        var hits = (data.hits || []).filter(function(h) { return h.title; });
+        var html = hits.map(function(h, idx) {
+          var url = h.url || ('https://news.ycombinator.com/item?id=' + h.objectID);
           return (idx > 0 ? '<span class="hn-sep">·</span>' : '') +
-            '<a class="hn-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(item.title) + '</a>';
+            '<a class="hn-link" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(h.title) + '</a>';
         }).join('');
         container.innerHTML = html || '<span style="color:var(--text-3);font-size:0.74rem;">暂无数据</span>';
       })
