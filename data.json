@@ -1,6 +1,102 @@
 {
-  "updated": "2026-06-08",
+  "updated": "2026-06-09",
   "items": [
+    {
+      "category": "A",
+      "title": "Claude Mythos 1、Grok 5、Gemini 3.5 Pro 六月同期正面交锋",
+      "source": "多家来源",
+      "summary": "Anthropic Claude Mythos 1、xAI Grok 5（长期延期后终发布）、Google Gemini 3.5 Pro 四周内集体亮相，加上 OpenAI GPT-5.5 Instant，头部 AI 玩家在同一时间窗口正面竞争。",
+      "url": "https://wavespeed.ai/blog/posts/june-2026-ai-launch-wave/",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "A",
+      "title": "OpenAI GPT-5.4 \"Thinking\" GDPVal 达 83%，超越人类专家基准",
+      "source": "Fortune / Morgan Stanley",
+      "summary": "首次达到或超过人类专家在经济价值任务上的平均水平，Morgan Stanley 警告世界尚未为这一 AI 质变做好准备。",
+      "url": "https://fortune.com/2026/03/13/elon-musk-morgan-stanley-ai-leap-2026/",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "A",
+      "title": "Meta Llama 4 Scout：开源模型首个 1000 万 Token 超长上下文",
+      "source": "Hugging Face / BentoML",
+      "summary": "单次可处理相当于数十本书籍体量的内容，Apache 2.0 授权，是开源 LLM 在上下文长度上对闭源模型的重要突破。",
+      "url": "https://huggingface.co/blog/daya-shankar/open-source-llms",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "A",
+      "title": "AI 自主发现 FFmpeg 21 个零日漏洞，安全研究进入实战阶段",
+      "source": "The Hacker News",
+      "summary": "安全初创公司用自主 AI agent 扫描 FFmpeg 发现 21 个未知漏洞，标志 AI 辅助漏洞挖掘从实验室走向生产实战。",
+      "url": "https://thehackernews.com/2026/06/threatsday-bulletin-ai-agents-gone.html",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "B",
+      "title": "OpenAI 成立 Deployment Company，对接 19 家全球投资机构",
+      "source": "CNBC / llm-stats",
+      "summary": "新实体专注 AI 能力商业化落地，企业收入现已占总收入 40% 以上，OpenAI 收入结构持续向 B 端转型。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "C",
+      "title": "GLM-5.1 MIT 开源，Zhipu AI 主攻 agentic 工程化",
+      "source": "Hugging Face / BentoML",
+      "summary": "专为复杂、长链路软件开发任务设计，MIT 协议商用友好，与 DeepSeek-V4 形成正面竞争，中国开源大模型持续发力。",
+      "url": "https://huggingface.co/blog/daya-shankar/open-source-llms",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "C",
+      "title": "Google Gemma 4 四款变体 Apache 2.0 同步发布",
+      "source": "Google I/O",
+      "summary": "多尺寸变体集中释放，Apache 2.0 授权可商用，进一步丰富本地部署选项，与 Meta Llama 4 竞争开源生态份额。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "D",
+      "title": "App Store 强制 iOS 26 SDK：2026-04-28 起所有新上传包必须适配",
+      "source": "Apple Developer",
+      "summary": "iOS 26.2 起同步开放替代应用市场和第三方支付渠道（日本 MSCA + EU DMA 合规），开发者需尽快完成 SDK 迁移。",
+      "url": "https://developer.apple.com/news/",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "D",
+      "title": "Apple / Google 合作推出跨平台无线数据迁移",
+      "source": "EU DMA Factsheet",
+      "summary": "允许用户换机时无线跨生态完整迁移数据，DMA 合规推动苹果、谷歌在互操作性上首次深度协作。",
+      "url": "https://digital-markets-act.ec.europa.eu/factsheet-how-dma-making-smartphones-better-interoperability-and-data-portability-case-studies-2026-05-11_en",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "E",
+      "title": "中美 AI 顶尖模型竞争差距缩至 2.7%，格局进入胶着阶段",
+      "source": "Stanford HAI AI Index 2026",
+      "summary": "自 2025 年初以来中美模型交替领先，截至 2026 年 3 月 Anthropic 最强模型仅领先 2.7%，全球 AI 霸主格局不再一边倒。",
+      "url": "https://hai.stanford.edu/news/inside-the-ai-index-12-takeaways-from-the-2026-report",
+      "date": "2026-06-09"
+    },
+    {
+      "category": "A",
+      "title": "NVIDIA Nemotron 3 Ultra 550B 发布，首个自研超大规模开源 LLM",
+      "source": "NVIDIA",
+      "summary": "MoE 架构，550B 总参数 / 55B active，面向企业推理场景，是 NVIDIA 首个自研超大规模开源语言模型，于 6 月 4 日正式发布。",
+      "url": "https://llm-stats.com/ai-news",
+      "date": "2026-06-04"
+    },
+    {
+      "category": "A",
+      "title": "Xiaomi MiMo 1T 参数开源模型正式商用",
+      "source": "小米",
+      "summary": "原匿名 1T 参数模型于 3 月 11 日开放，现以 MiMo 品牌正式商用，专注 reasoning 和 agentic 任务，可商业使用。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-08"
+    },
     {
       "category": "A",
       "title": "GPT-5.5 Instant 成为 ChatGPT 默认模型",
@@ -43,9 +139,9 @@
     },
     {
       "category": "B",
-      "title": "Claude Code 达 $25 亿 ARR，Anthropic 整体年化 $300 亿",
+      "title": "Anthropic 秘密提交 S-1，Claude Code 达 $25 亿 ARR",
       "source": "Anthropic",
-      "summary": "公开发布仅 9 个月，Q1 同比增长 80 倍。Anthropic 已秘密向 SEC 提交 S-1 草案，IPO 准备信号明确。",
+      "summary": "公开发布仅 9 个月，Anthropic 整体年化收入 $300 亿，Q1 增长 80 倍。6 月 1 日已向 SEC 秘密递交 S-1，IPO 准备信号明确。",
       "url": "https://www.anthropic.com/news",
       "date": "2026-06-08"
     },
@@ -53,7 +149,7 @@
       "category": "B",
       "title": "GitHub Copilot 切换计量计费，引入 AI Credits",
       "source": "Microsoft / GitHub",
-      "summary": "6 月 1 日起从请求次数计费改为用量计费，虚拟货币 GitHub AI Credits，$0.01 / 积分。",
+      "summary": "6 月 1 日起从请求次数计费改为用量计费，虚拟货币 GitHub AI Credits，$0.01 / 积分，无限订阅模式终结。",
       "url": "https://llm-stats.com/llm-updates",
       "date": "2026-06-08"
     },
@@ -107,6 +203,22 @@
     },
     {
       "category": "D",
+      "title": "iOS 26.6 Beta 发布，全平台同步",
+      "source": "Apple Developer",
+      "summary": "同步发布 iPadOS / macOS / tvOS / visionOS / watchOS 26.6 Beta，开发者可开始适配测试。",
+      "url": "https://developer.apple.com/news/",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "D",
+      "title": "Chrome 149 创纪录修复 429 个安全漏洞",
+      "source": "Google",
+      "summary": "单次发布修复数量史上最高，建议所有用户及企业服务器尽快更新至最新版本。",
+      "url": "https://thehackernews.com/",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "D",
       "title": "Vue 3.5 Vapor Mode 稳定版：DOM 操作性能提升 36%",
       "source": "Vue.js",
       "summary": "完全绕过 Virtual DOM，每周 NPM 下载量 640 万次，同比增长 37%，开发者满意度 93%。",
@@ -117,7 +229,7 @@
       "category": "D",
       "title": "iOS 26.2 起开放第三方支付和替代应用市场",
       "source": "Apple Developer",
-      "summary": "日本 MSCA 合规要求推动，EU DMA 要求 6 月 1 日前开放通知、近场配对等互操作接口；Apple/Google 合作推出跨平台无线数据迁移方案。",
+      "summary": "日本 MSCA 合规要求推动，EU DMA 要求 6 月 1 日前开放通知、近场配对等互操作接口。",
       "url": "https://developer.apple.com/news/",
       "date": "2026-06-08"
     },
@@ -136,6 +248,30 @@
       "summary": "开发者调查和招聘岗位双料第一，服务器优先渲染成为 2026 年 Web 开发默认方式。",
       "url": "https://wasp.sh/resources/2026/02/24/best-frameworks-web-dev-2026",
       "date": "2026-06-08"
+    },
+    {
+      "category": "E",
+      "title": "Meta 签署 $1000 亿 AMD 芯片采购协议",
+      "source": "Meta",
+      "summary": "购买 MI540 GPU 和 CPU，分散 AI 基础设施对单一供应商的依赖，支撑个人超级智能开发战略。",
+      "url": "https://llm-stats.com/llm-updates",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "E",
+      "title": "FBI 警告 FIFA 世界杯主题诈骗激增",
+      "source": "FBI / 安全社区",
+      "summary": "数千个仿冒 FIFA 域名上线，盗版直播 APP 内藏银行木马，赛事期间需提高警惕，避免点击不明链接。",
+      "url": "https://thehackernews.com/",
+      "date": "2026-06-08"
+    },
+    {
+      "category": "E",
+      "title": "Board Studio 获 $2000 万融资，AI 自然语言造游戏",
+      "source": "TechCrunch",
+      "summary": "Mirror 创始人新项目，用自然语言提示构建原创游戏，年内上线，已售出数千台配套硬件设备。",
+      "url": "https://techcrunch.com/2026/06/02/board-the-new-game-startup-from-mirror-founder-brynn-putnam-raises-20m-has-already-sold-thousands/",
+      "date": "2026-06-02"
     },
     {
       "category": "E",
